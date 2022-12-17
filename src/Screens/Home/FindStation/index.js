@@ -4,20 +4,20 @@ import {View,Text, Image,StyleSheet,ImageBackground ,TouchableOpacity,TextInput,
 import { Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { black, green100 } from 'react-native-paper/lib/typescript/styles/colors';
-import { getRoutes,getStations } from '../../../Network/Api';
 import { forEach } from 'react-native-axios/lib/utils';
+import { ApiClient } from '../../../Network/ApiClient';
 
 export default class SearchStationAndRoute extends React.Component{
 
     constructor({props,navigation}){
         super(props);
+        this.apiClient = new ApiClient();
         this.state = { isToggleOn: false }
         this.state={
             searchQuery:"",
             navigation:navigation,
             data:[],
         }
-
     }
     onChangeSearch = query => {
         this.setState({
@@ -27,8 +27,8 @@ export default class SearchStationAndRoute extends React.Component{
     
     
     componentDidMount(){
-        getRoutes().then(routes=>{
-            getStations().then(res=>{
+        this.apiClient.getRoutes().then(routes=>{
+            this.apiClient.getStations().then(res=>{
                 res.forEach((item)=>{
                     routes = [...routes, item]
                 })

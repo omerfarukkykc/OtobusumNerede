@@ -2,11 +2,13 @@
 import React, { useRef } from 'react';
 import {View, Text, Button,StyleSheet,Image,FlatList} from 'react-native';
 import BackgroundCustom from '../../../../../Components/BackgroundCustom';
-import { getRouteTimes } from '../../../../../Network/Api';
+import { ApiClient } from '../../../../../Network/ApiClient';
+
 export default class RouteTimes extends React.Component{
     
     constructor({props,route,navigation}){
         super(props)
+        this.apiClient = new ApiClient();
         const {routeName ,routeID} = route.params.route
         this.state = {
             routeName:routeName,
@@ -16,7 +18,7 @@ export default class RouteTimes extends React.Component{
       
     }
     componentDidMount(){
-      getRouteTimes(this.state.routeID).then((item)=>{
+      this.apiClient.getRouteTimes(this.state.routeID).then((item)=>{
           this.setState({
               data:item,
           })

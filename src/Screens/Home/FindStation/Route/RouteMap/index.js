@@ -1,13 +1,14 @@
 import React, { useRef } from 'react';
 import {View, Text, Button,StyleSheet,Image} from 'react-native';
 import MapView, {PROVIDER_GOOGLE,PROVIDER_DEFAULT,Marker,Callout, Polyline} from 'react-native-maps';
-import { getRoute } from '../../../../../Network/Api';
 import { SwipeablePanel } from 'rn-swipeable-panel';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ApiClient } from '../../../../../Network/ApiClient';
 export default class RouteMap extends React.Component{
     
     constructor({props,route,navigation}){
         super(props)
+        this.apiClient = new ApiClient();
         const {routeName ,routeID} = route.params.route
         this.state = {
             routeName:routeName,
@@ -27,7 +28,7 @@ export default class RouteMap extends React.Component{
         
     }
     componentDidMount(){
-        getRoute(this.state.routeID).then((item)=>{
+        this.apiClient.getRoute(this.state.routeID).then((item)=>{
             var latitude = 0
             var longitude = 0
             item.stations.forEach(element => {

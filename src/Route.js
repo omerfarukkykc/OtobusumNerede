@@ -16,7 +16,12 @@ import LostStuff from './Screens/Options/LostStuff';
 import Settings from './Screens/Options/Settings';
 import Register from './Screens/Options/Register';
 import LogIn from './Screens/Options/LogIn';
+import {ApiClient} from './Network/ApiClient';
 const Tab = createBottomTabNavigator();
+
+
+
+
 function HomeScreen() {
   return (
     <Tab.Navigator

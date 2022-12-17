@@ -12,30 +12,15 @@ import { styles } from './style';
 import {theme} from '../../../Core/theme';
 import {emailValidator} from '../../../Helpers/emailValidator';
 import {passwordValidator} from '../../../Helpers/passwordValidator';
-import { Api,APILogIn,getRoutes ,deneme,createApi} from '../../../Network/Api';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ApiClient } from '../../../Network/ApiClient';
 export default function LogIn({navigation}) {
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
   const [data, setData] = useState({success: false, loading: false});
   const baseUrl = 'http://10.0.2.2:8080/api';
-  /*
-  const authControl = async (token) =>{
-    const response = await fetch(config.url+'/auth/authenticate', {
-      method: 'POST',
-      headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-          username: username,
-          password: password
-      }).then((response)=> response)
-      .catch(()=>console.log("ERROR"))
-    })
-  }
- */
+  
   
   const onLoginPressed = async () => {
     
@@ -46,12 +31,9 @@ export default function LogIn({navigation}) {
       setPassword({...password, error: passwordError});
       return;
     }
-    APILogIn("omer.twd@gmail.com","123456").then((item)=>{
-      navigation.navigate("Anasayfa")
+    ApiClient.logIn("omer.twd@gmail.com","123456").then((item) => {
+      navigation.navigate('Anasayfa')
     })
-    
-    
-  
   };
   
   return (

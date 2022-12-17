@@ -4,7 +4,8 @@
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LogOut } from '../Network/Api';
+import { ApiClient, logOut } from '../Network/ApiClient';
+
 import {
   SafeAreaView,
   View,
@@ -43,7 +44,7 @@ const SidebarMenu = props => {
         />
         <DrawerItem
           label="Oturumu Kapat"
-          onPress={() => {LogOut()}}
+          onPress={() => {ApiClient.logOut()}}
           icon={({ focused, color, size }) => <Ionicons name="log-out" size={size} color='#ccc' />}
         />
         
