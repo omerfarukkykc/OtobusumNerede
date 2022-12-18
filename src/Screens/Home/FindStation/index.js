@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { black, green100 } from 'react-native-paper/lib/typescript/styles/colors';
 import { forEach } from 'react-native-axios/lib/utils';
 import { ApiClient } from '../../../Network/ApiClient';
+import Loading from '../../../Components/Loading';
 
 export default class SearchStationAndRoute extends React.Component{
 
@@ -17,6 +18,7 @@ export default class SearchStationAndRoute extends React.Component{
             searchQuery:"",
             navigation:navigation,
             data:[],
+            isLoading:true
         }
     }
     onChangeSearch = query => {
@@ -35,8 +37,15 @@ export default class SearchStationAndRoute extends React.Component{
             }).finally(()=>{
                 this.setState({
                     data:routes
+                    
                 })
             });
+        }).finally(()=>{
+            setTimeout(()=>{
+                this.setState({
+                    isLoading:false
+                })
+            },500)
         });
     }
     /*
@@ -95,6 +104,11 @@ export default class SearchStationAndRoute extends React.Component{
     };
        
     render (){
+        if(this.state.isLoading){
+            return (
+                <Loading/>
+            )
+        }
         return(
         <BackgroundCustom  >
             <View style={[styles.searchbarView]} >

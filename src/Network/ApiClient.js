@@ -42,6 +42,16 @@ export class ApiClient {
         const response = await api.get('/route/' + routeID + '/times');
         return response.data
     }
+    async getBalance(userID) {
+        const api = await createApi();
+        const response = await api.get(`/users/${userID}/balance`);
+        return response.data
+    }
+    async getBalanceLog(userID) {
+        const api = await createApi();
+        const response = await api.get(`/users/${userID}/balanceLogs/`);
+        return response.data
+    }
     async getVersion() {
         const api = await createApi();
         const response = await api.get('/version');

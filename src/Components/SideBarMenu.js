@@ -22,19 +22,9 @@ import {
 } from '@react-navigation/drawer';
 
 const SidebarMenu = props => {
-  const BASE_PATH =
-    'https://raw.githubusercontent.com/AboutReact/sampleresource/master/';
-  const proileImage = 'react_logo.png';
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      {/*Top Large Image */}
-      <View>
-      <Image
-        source={{uri: BASE_PATH + proileImage}}
-        style={styles.sideMenuProfileIcon}
-      />
-      </View>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
         <DrawerItem
@@ -50,9 +40,7 @@ const SidebarMenu = props => {
         
         
       </DrawerContentScrollView>
-      <Text style={{fontSize: 16, textAlign: 'center', color: 'grey'}}>
-        www.aboutreact.com
-      </Text>
+      
     </SafeAreaView>
   );
 };

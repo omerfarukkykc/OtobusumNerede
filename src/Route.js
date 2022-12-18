@@ -9,16 +9,14 @@ import SidebarMenu from './Components/SideBarMenu';
 import Home from './Screens/Home';
 import Favorites from './Screens/Favorites';
 import Balance from './Screens/Balance';
-import AboutUs from './Screens/Options/AboutUs';
 import FeedBack from './Screens/Options/FeedBack';
-import LogOut from './Screens/Options/LogOut';
 import LostStuff from './Screens/Options/LostStuff';
 import Settings from './Screens/Options/Settings';
 import Register from './Screens/Options/Register';
 import LogIn from './Screens/Options/LogIn';
 import {ApiClient} from './Network/ApiClient';
+import Loading from './Components/Loading';
 const Tab = createBottomTabNavigator();
-
 
 
 
@@ -43,7 +41,7 @@ function HomeScreen() {
         tabBarHideOnKeyboard:true,
         
       })}>
-      <Tab.Screen  name="Anasayfa" component={Home} />
+      <Tab.Screen name="Anasayfa" component={Home} />
       <Tab.Screen name="Ulaşım Kartlarım" component={Balance} />
       <Tab.Screen name="Favorilerim" component={Favorites} />
     </Tab.Navigator>
@@ -53,10 +51,25 @@ function HomeScreen() {
 
 const Drawer = createDrawerNavigator();
 export default class Route extends React.Component {
+  constructor(){
+    super()
+    this.state = {
+      isLoading:true
+    }
+    setTimeout(()=>{
+      this.setState({
+        isLoading:false
+      })
+    },3000)
+  }
+
+
   render() {
+    if(this.state.isLoading){
+      return(<Loading name={"Otobüsüm Nerede"}></Loading>)
+    }
     return (
       <NavigationContainer>
-        
         <Drawer.Navigator
           drawerContent={props => <SidebarMenu {...props} />}
           screenOptions={{headerShown: false}}>
@@ -149,19 +162,6 @@ export default class Route extends React.Component {
         </Drawer.Navigator>
       </NavigationContainer>
     );
-    /*<Drawer.Screen
-            options={{
-              title: 'Oturumu Kapat',
-              drawerIcon: ({focused, size}) => (
-                <Ionicons
-                  name="log-out"
-                  size={size}
-                  color={focused ? '#7cc' : '#ccc'}
-                />
-              ),
-            }}
-            name="Oturumu Kapat"
-            component={LogOut}
-          />*/
+    
   }
 }

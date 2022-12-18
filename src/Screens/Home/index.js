@@ -11,7 +11,7 @@ import Route from './FindStation/Route';
 import Station from './FindStation/Station';
 
 const Stack = createStackNavigator();
-export default function TabA() {
+export default function Home() {
     return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Welcome" component={Welcome} />
@@ -23,7 +23,6 @@ export default function TabA() {
         <Stack.Screen name="Hat ve Durak Arama" component={FindStation} />
         <Stack.Screen name="Route" component={Route} />
         <Stack.Screen name="Station" component={Station} />
-
     </Stack.Navigator>
     );
   }

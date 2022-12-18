@@ -19,7 +19,7 @@ export default function LogIn({navigation}) {
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
   const [data, setData] = useState({success: false, loading: false});
-  const baseUrl = 'http://10.0.2.2:8080/api';
+  
   
   
   const onLoginPressed = async () => {
@@ -31,7 +31,7 @@ export default function LogIn({navigation}) {
       setPassword({...password, error: passwordError});
       return;
     }
-    ApiClient.logIn("omer.twd@gmail.com","123456").then((item) => {
+    ApiClient.logIn(email.value,password.value).then((item) => {
       navigation.navigate('Anasayfa')
     })
   };
