@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, View, Text,StyleSheet} from 'react-native';
 import {createDrawerNavigator,DrawerItem} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
+import {getFocusedRouteNameFromRoute, NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -41,7 +41,15 @@ function HomeScreen() {
         tabBarHideOnKeyboard:true,
         
       })}>
-      <Tab.Screen name="Anasayfa" component={Home} />
+      <Tab.Screen name="Anasayfa" component={Home} options={({ route }) => ({
+            tabBarStyle: ((route) => {
+              const routeName = getFocusedRouteNameFromRoute(route) ?? ""
+              if (routeName != "" && routeName != "Welcome") {
+                return { display: "none" }
+              }
+              return
+            })(route),
+          })} />
       <Tab.Screen name="Ulaşım Kartlarım" component={Balance} />
       <Tab.Screen name="Favorilerim" component={Favorites} />
     </Tab.Navigator>

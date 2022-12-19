@@ -11,14 +11,16 @@ export class ApiClient {
     static logOut(username, password) {
         AsyncStorage.removeItem('access_token');
     }
-    async getUser() {
-        const api = await createApi();
-        try {
+    async getUserId() {
+        var userID = 0;
+        userID = await AsyncStorage.getItem("userID");
+        if(userID == null){
+            const api = await createApi();
             const response = await api.get('/auth/user');
-            return response.data;
-        } catch (error) {
-            console.error(error);
+            userID = response.data;
+            AsyncStorage.setItem("userID", String(response.data))
         }
+        return userID;
     }
     async getRoutes() {
         const api = await createApi();
@@ -44,12 +46,22 @@ export class ApiClient {
     }
     async getBalance(userID) {
         const api = await createApi();
-        const response = await api.get(`/users/${userID}/balance`);
+        const response = await api.get(`/users/${await this.getUserId()}/balance`);
         return response.data
     }
     async getBalanceLog(userID) {
         const api = await createApi();
-        const response = await api.get(`/users/${userID}/balanceLogs/`);
+        const response = await api.get(`/users/${await this.getUserId()}/balanceLogs/`);
+        return response.data
+    }
+    async addFavoriteStation(stationID) {
+        const api = await createApi();
+        const response = await api.post(`/users/${await this.getUserId()}/favorites/station/${stationID}`);
+        return response.data
+    }
+    async addFavoriteRoute(stationID) {
+        const api = await createApi();
+        const response = await api.post(`/users/${await this.getUserId()}/favorites/route/${stationID}`);
         return response.data
     }
     async getVersion() {

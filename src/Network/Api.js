@@ -1,7 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-const host = 'http://10.0.2.2:8080/api';
-const getToken = async (username, password) =>{
+import DeviceInfo from 'react-native-device-info'
+const demoServer = 'http://10.0.2.2:8080/api';
+const server = 'http://10.0.2.2:8080/api';
+const getHost = async () =>{
+    const isEmulator = await  DeviceInfo.isEmulator()
+    return (isEmulator)?server:demoServer;
+}
+const getToken = async (username, password,host) =>{
     try {
         token = await AsyncStorage.getItem('access_token');
         if(token == null){
@@ -27,8 +33,8 @@ const getToken = async (username, password) =>{
     }
 }
 export const createApi = async (username,password) => {
-    
-    token = await getToken(username,password);    
+    const host = await getHost();  
+    token = await getToken(username,password,host);    
     const api = axios.create({
         baseURL: host,
         headers: {

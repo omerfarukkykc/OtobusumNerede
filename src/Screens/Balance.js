@@ -16,12 +16,13 @@ export default class Balance extends React.Component {
 
   }
   componentDidMount() {
-    this.apiClient.getBalance(1).then((res) => {
+    
+    this.apiClient.getBalance().then((res) => {
       this.setState({
         balance: res
       })
     })
-    this.apiClient.getBalanceLog(1).then((res) => {
+    this.apiClient.getBalanceLog().then((res) => {
       this.setState({
         history: res
       })

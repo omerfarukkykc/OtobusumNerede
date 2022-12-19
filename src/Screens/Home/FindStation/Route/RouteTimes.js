@@ -1,8 +1,9 @@
 
 import React, { useRef } from 'react';
-import {View, Text, Button,StyleSheet,Image,FlatList} from 'react-native';
-import BackgroundCustom from '../../../../../Components/BackgroundCustom';
-import { ApiClient } from '../../../../../Network/ApiClient';
+import {View, Text, Button,StyleSheet,Image,FlatList, LogBox} from 'react-native';
+import BackgroundCustom from '../../../../Components/BackgroundCustom';
+import Loading from '../../../../Components/Loading';
+import { ApiClient } from '../../../../Network/ApiClient';
 
 export default class RouteTimes extends React.Component{
     
@@ -14,7 +15,9 @@ export default class RouteTimes extends React.Component{
             routeName:routeName,
             routeID:routeID,
             data:[],
+            isLoading:true
         }
+       
       
     }
     componentDidMount(){
@@ -22,6 +25,12 @@ export default class RouteTimes extends React.Component{
           this.setState({
               data:item,
           })
+      }).finally(()=>{
+        setTimeout(()=>{
+          this.setState({
+            isLoading:false
+          })
+        },500)
       })
     }
     renderItem(item){
@@ -37,7 +46,9 @@ export default class RouteTimes extends React.Component{
     )
   };
     render (){
-        
+        if(this.state.isLoading){
+          return(<Loading/>)
+        }
       return (
         <BackgroundCustom>
             <View style={styles.header}>
@@ -98,8 +109,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'black',
     margin: 2,
-
   }
-
-
 });
