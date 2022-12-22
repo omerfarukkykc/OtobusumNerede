@@ -69,6 +69,11 @@ export class ApiClient {
         const response = await api.get(`/users/${await this.getUserId()}/favorites`);
         return response.data
     }
+    async getDealers(){
+        const api = await createApi();
+        const response = await api.get('/dealer/');
+        return response.data
+    }
     async getVersion() {
         const api = await createApi();
         const response = await api.get('/version');
