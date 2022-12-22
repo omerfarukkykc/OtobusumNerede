@@ -74,7 +74,7 @@ export default class Route extends React.Component {
 
   render() {
     if(this.state.isLoading){
-      return(<Loading name={"Otobüsüm Nerede"}></Loading>)
+      return(<Loading name={"BARULAŞ"}></Loading>)
     }
     return (
       <NavigationContainer>

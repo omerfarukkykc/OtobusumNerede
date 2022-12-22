@@ -15,6 +15,7 @@ export default class RouteMap extends React.Component {
         this.apiClient = new ApiClient();
         const { routeName, routeID } = route.params.route
         this.state = {
+            navigation: navigation,
             routeName: routeName,
             routeID: routeID,
             data: [],
@@ -29,7 +30,8 @@ export default class RouteMap extends React.Component {
             isRouteLineG: true,
             intervalId: 0,
             busses: [],
-            visible: false
+            visible: false,
+            isFavorite:false
         }
         LogBox.ignoreAllLogs()
     }
@@ -50,6 +52,7 @@ export default class RouteMap extends React.Component {
                 routeLine: item.routeLineG,
                 latitude: latitude,
                 longitude: longitude,
+                busses: item.busses
 
             })
             BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
@@ -150,11 +153,14 @@ export default class RouteMap extends React.Component {
             visible: !this.state.visible
         })
     }
-    addFavorite(){
-        this.apiClient.addFavoriteRoute(this.state.routeID).then((res)=>{
-            ToastAndroid.show("Favorilere Eklendi",ToastAndroid.SHORT)
-        }).catch((err)=>{
-            ToastAndroid.show("Favorilere Eklenemedi",ToastAndroid.SHORT)
+    toggleFavorite() {
+        this.apiClient.addFavoriteRoute(this.state.routeID).then((res) => {
+            ToastAndroid.show((res == "") ? "Favorilerden Çıkarıldı" : "Favorilere Eklendi", ToastAndroid.SHORT)
+            this.setState({
+                isFavorite: (res == "") ? false : true
+            })
+        }).catch((err) => {
+            ToastAndroid.show("Server Error", ToastAndroid.SHORT)
         })
     }
     render() {
@@ -242,9 +248,9 @@ export default class RouteMap extends React.Component {
 
                 <View style={styles.buttonGroup}>
 
-                    
+
                     {this.state.visible &&
-                        <View style = {styles.toggelledButtons}>
+                        <View style={styles.toggelledButtons}>
                             <TouchableOpacity style={styles.button} onPress={() => { this.changeDirection() }}  >
                                 <Text style={styles.buttonText}>
                                     Yön Değiştir
@@ -255,14 +261,14 @@ export default class RouteMap extends React.Component {
                                     Hat Bilgi
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.button} onPress={() => { this.addFavorite() }}  >
+                            <TouchableOpacity style={styles.button} onPress={() => { this.toggleFavorite() }}  >
                                 <Text style={styles.buttonText}>
-                                    Favori
+                                    {this.state.isFavorite?"Favori Çıkar":"Favori Ekle"}
                                 </Text>
                             </TouchableOpacity>
                         </View>
                     }
-                    <TouchableOpacity style={[styles.button,styles.toggleButton]} onPress={() => { this.toggleButtons() }}  >
+                    <TouchableOpacity style={[styles.button, styles.toggleButton]} onPress={() => { this.toggleButtons() }}  >
                         <Text style={styles.buttonText}>
                             Seçenekler
                         </Text>
@@ -307,11 +313,11 @@ const styles = StyleSheet.create({
         margin: 5,
         position: 'absolute',
     },
-    toggleButton:{
+    toggleButton: {
         backgroundColor: '#f9a03f',
     },
     toggelledButtons: {
-        
+
     }
 
 });

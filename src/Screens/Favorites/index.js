@@ -7,7 +7,7 @@ import FavoriteStations from './FavoriteStations'
 export default function Favorites({navigation}) {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Favori Hatlar" component={FavoriteRoutes} />
+      <Tab.Screen name="Favori Hatlar"  component={FavoriteRoutes} />
       <Tab.Screen name="Favori Duraklar" component={FavoriteStations} />
     </Tab.Navigator>
   );

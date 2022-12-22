@@ -39,13 +39,14 @@ export default class SearchStationAndRoute extends React.Component{
                     data:routes
                     
                 })
+                setTimeout(()=>{
+                    this.setState({
+                        isLoading:false
+                    })
+                },500)
             });
         }).finally(()=>{
-            setTimeout(()=>{
-                this.setState({
-                    isLoading:false
-                })
-            },500)
+            
         });
     }
     /*
@@ -106,7 +107,7 @@ export default class SearchStationAndRoute extends React.Component{
     render (){
         if(this.state.isLoading){
             return (
-                <Loading/>
+                <Loading />
             )
         }
         return(

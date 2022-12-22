@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import DeviceInfo from 'react-native-device-info'
-const demoServer = 'http://10.0.2.2:8080/api';
+const demoServer = 'http://209.250.237.146:8080/api';
 const server = 'http://10.0.2.2:8080/api';
 const getHost = async () =>{
     const isEmulator = await  DeviceInfo.isEmulator()
